@@ -39,16 +39,11 @@ function new_dashboard_widget_callback(){
 
 function pwr_table_init() {
    global $wpdb;
-   $table_name = $wpdb->prefix. 'chartTable';
-   $sql = "CREATE TABLE {$table_name} (
-      id INT NOT NULL AUTO_INCREMENT,
-      'name' VARCHAR(250),
-      uv INT,
-      pv INT,
-      amt INT,
-      dateT DATE,
-      PRIMARY KEY (id)
-   );";
+   $prefix           = $wpdb->prefix;
+	$table_name       = $prefix . 'wpwr_chart_table';
+	$charset_collate  = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE IF NOT EXISTS {$table_name} ( `id` INT(11) NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) , `uv` INT(11) NOT NULL , `pv` INT(11) NOT NULL , `amt` INT(11) NOT NULL , `dateT` DATE NOT NULL , PRIMARY KEY (`id`)) $charset_collate;";
+
 
    require_once ABSPATH. "wp-admin/includes/upgrade.php";
    dbDelta( $sql );
